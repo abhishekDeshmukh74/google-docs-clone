@@ -6,13 +6,13 @@ A **lightweight, real-time collaborative rich-text editor** built with **React (
 
 ## 🚀 Live Demo
 
-[Access the Live Demo](https://google-docs-clone-a44r.onrender.com) — try branching off a new document, test real-time collaboration, refresh, or reconnect to see autosaves in action.
+[Access the Live Demo](https://google-docs-clone-a44r.onrender.com)
 
 ---
 
 ## 📸 Screenshots & Live Demo
 - Live app: https://google-docs-clone-a44r.onrender.com
-- (Add screenshots here, e.g. `/screenshots/home.png`, `/screenshots/editor.png`)
+- [🎥 Demo Video Recording](https://github.com/abhishekDeshmukh74/google-docs-clone/blob/master/client/public/demo%20recording.mp4)
 
 ## 🧱 Tech Stack
 - Frontend: React (Vite), Quill 2
