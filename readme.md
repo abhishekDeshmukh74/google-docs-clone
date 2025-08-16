@@ -1,9 +1,14 @@
-# Google Docs Clone
+# 📄 Google Docs Clone
 
-Real-time collaborative text editor built with React + Quill, Socket.IO, and Node.js. Create, share, and edit documents with live cursor updates and periodic autosave.
+A **lightweight, real-time collaborative rich-text editor** built with **React (Vite)**, **Quill**, **Socket.IO**, **Node.js/Express**, and **MongoDB**. Supports real-time editing, autosave, and persistent documents.
 
-## Live Demo
-https://google-docs-clone-a44r.onrender.com
+---
+
+## 🚀 Live Demo
+
+[Access the Live Demo](https://google-docs-clone-a44r.onrender.com) — try branching off a new document, test real-time collaboration, refresh, or reconnect to see autosaves in action.
+
+---
 
 ## 📸 Screenshots & Live Demo
 - Live app: https://google-docs-clone-a44r.onrender.com
