@@ -10,9 +10,12 @@ Live app: [Access the Live Demo](https://google-docs-clone-a44r.onrender.com)
 
 ---
 
-## 🎥 Demo Video Recording
+## 🎥 Demo Video
 
-- [🎥 Demo Video Recording](https://github.com/abhishekDeshmukh74/google-docs-clone/blob/master/client/public/demo%20recording.mp4)
+[![Demo Video](client/public/demo-recording.gif)](https://github.com/abhishekDeshmukh74/google-docs-clone/blob/master/client/public/demo%20recording.gif)
+
+> 🔊 Click the preview above to watch the full demo.
+
 
 ---
 
