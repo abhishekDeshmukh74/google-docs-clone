@@ -12,7 +12,7 @@ A lightweight collaborative rich-text editor built with **React (Vite)**, **Quil
     <img src="https://raw.githubusercontent.com/abhishekDeshmukh74/google-docs-clone/main/screenshots/editor.png" alt="Editor Screenshot" width="600"/>
 </p>
 
-- **Live Demo:** [https://your-demo-url.com](https://your-demo-url.com)
+- **Live Demo:** [https://google-docs-clone-a44r.onrender.com](https://google-docs-clone-a44r.onrender.com)
 ---
 
 ## ✨ Features
