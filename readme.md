@@ -1,197 +1,238 @@
 # Google Docs Clone
 
-A lightweight collaborative rich-text editor built with **React (Vite)**, **Quill**, **Socket.IO**, **Node/Express**, and **MongoDB**. It supports real-time editing with autosave and document persistence.
+Real-time collaborative text editor built with React + Quill, Socket.IO, and Node.js. Create, share, and edit documents with live cursor updates and periodic autosave.
 
-> Repo layout includes `client/` and `server/` packages.
-
----
+## Live Demo
+https://google-docs-clone-a44r.onrender.com
 
 ## 📸 Screenshots & Live Demo
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/abhishekDeshmukh74/google-docs-clone/main/screenshots/editor.png" alt="Editor Screenshot" width="600"/>
-</p>
-
-- **Live Demo:** [https://google-docs-clone-a44r.onrender.com](https://google-docs-clone-a44r.onrender.com)
----
-
-## ✨ Features
-
-- **Real-time collaboration** via Socket.IO rooms (document-scoped).
-- **Rich text editing** with Quill (headings, lists, bold/italic/underline, code block, images, colors).
-- **Autosave** every few seconds to persist content in MongoDB.
-- **Share by URL**: open the same doc ID in multiple tabs to collaborate.
-- **Resilient reconnect**: sessions rejoin their room after transient disconnects.
-
----
+- Live app: https://google-docs-clone-a44r.onrender.com
+- (Add screenshots here, e.g. `/screenshots/home.png`, `/screenshots/editor.png`)
 
 ## 🧱 Tech Stack
+- Frontend: React (Vite), Quill 2
+- Realtime: Socket.IO
+- Backend: Node.js, Express
+- Database: MongoDB Atlas (M0 Free tier works)
+- Build/Deploy: Render (Static Site for client, Web Service for server)
 
-- **Frontend:** React (Vite), Quill, Socket.IO Client
-- **Backend:** Node.js, Express, Socket.IO
-- **Database:** MongoDB (Mongoose)
-- **Build/Dev:** Yarn
+## ✨ Features
+- Create & open documents via URL (UUID)
+- Collaborative editing with Quill
+- Realtime updates over WebSockets (Socket.IO)
+- Autosave every few seconds
+- Rich text formatting (headings, lists, bold/italic/underline, code blocks, images, alignment, colors)
 
----
-
-## 📁 Project Structure
-
+## 🧱 Monorepo Structure
 ```
-google-docs-clone/
-├─ client/           # Vite React app (Quill editor, sockets, UI)
-└─ server/           # Express + Socket.IO + MongoDB persistence
+/client     # React + Vite app
+/server     # Node.js + Express + Socket.IO API
 ```
 
----
-
-## 🚀 Getting Started
-
-### 1) Prerequisites
+## Prerequisites
 - Node.js 18+
 - Yarn
-- MongoDB connection string (Atlas or local)
+- MongoDB Atlas cluster (or local MongoDB)
+- Render accounts for frontend and backend (optional but recommended)
 
-### 2) Clone
-```bash
-git clone https://github.com/abhishekDeshmukh74/google-docs-clone.git
-cd google-docs-clone
+---
+
+## Environment Variables
+
+### Server (`/server/.env`)
 ```
-
-### 3) Install deps
-```bash
-# In root (optional), then per package:
-cd client && yarn && cd ..
-cd server && yarn && cd ..
-```
-
-### 4) Environment variables
-
-Create **`server/.env`**:
-```env
 PORT=3001
-MONGO_URI=your-mongodb-connection-string
-CLIENT_ORIGIN=http://localhost:5173
+MONGO_URI=<your MongoDB connection string>
+# Comma-separated list of allowed client origins (no spaces)
+CLIENT_URLS=http://localhost:5173,https://google-docs-clone-a44r.onrender.com
 ```
 
-Create **`client/.env`**:
-```env
+### Client (`/client/.env`)
+```
+# Point this to your local or deployed server base URL
 VITE_SERVER_URL=http://localhost:3001
+# For production build on Render (example):
+# VITE_SERVER_URL=https://<your-backend-on-render>.onrender.com
 ```
 
-> Note: With Vite, only variables prefixed with `VITE_` are exposed to the browser.
+---
 
-### 5) Run the server
+## Local Development
+
+### 1) Install dependencies
 ```bash
-cd server
-yarn dev
+# in /client
+yarn
 
-### 6) Run the client
+# in /server
+yarn
+```
+
+### 2) Start backend
 ```bash
-cd client
-yarn dev
+# in /server
+yarn dev    # or: yarn start / node server.js (match your server script)
 ```
 
-- Client: http://localhost:5173
-- Server: http://localhost:3001
-
----
-
-## 🧪 Usage
-
-1. Start both **server** and **client**.
-2. Open the app and navigate to a document URL. Common patterns:
-     - Auto-generated doc ID on load (e.g., `/documents/:documentId`)
-     - Or paste a known doc ID into the URL to join the same room
-3. Open the same document in another browser/tab to see live updates.
-
----
-
-## ⚙️ Editor Toolbar (Quill)
-
-Typical options enabled:
-- Headings (H1–H6), Font
-- Ordered/Bullet lists
-- Bold / Italic / Underline
-- Color / Background
-- Subscript / Superscript
-- Align
-- Image, Blockquote, Code Block
-- Clear formatting
-
----
-
-## 🧲 How it Works (High Level)
-
-- **Room = Document ID**
-    Each doc ID maps to a Socket.IO room. All clients in that room receive delta updates.
-
-- **Operational-ish Updates**
-    Quill emits deltas on change. Deltas are broadcast to all peers in the room, which apply them locally.
-
-- **Autosave**
-    On an interval (e.g., ~2s), the server persists the latest contents to MongoDB.
-
-- **First Load**
-    When a client joins, the server returns the latest stored doc (or creates a new one if it doesn’t exist).
-
----
-
-## 🛡️ Production Notes
-
-- Set strict CORS to your deployed frontend origin.
-- Use a dedicated MongoDB user with least privilege.
-- Consider **rate limiting** on join/load endpoints.
-- Enable **sticky sessions** or use a **Socket.IO adapter** (e.g., Redis) if you scale the server horizontally.
-- Add **auth** (e.g., JWT) and **ACLs** for private documents.
-
----
-
-## 📜 Scripts (common)
-
-**Server**
-```jsonc
-// server/package.json (examples)
-{
-    "scripts": {
-        "dev": "nodemon index.js",
-        "start": "node index.js"
-    }
-}
-```
-
-**Client**
-```jsonc
-// client/package.json (examples)
-{
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview"
-    }
-}
-```
-
-Run with Yarn:
+### 3) Start frontend
 ```bash
-# server
-cd server && yarn dev
+# in /client
+yarn dev    # runs Vite on http://localhost:5173
+```
 
-# client
-cd client && yarn dev
+Open `http://localhost:5173` and create/open a document route like:
+```
+/documents/26edcc24-3634-474c-948a-7f284cd1be20
 ```
 
 ---
 
-## 🧰 Troubleshooting
+## Deployment on Render (No render.yaml)
 
-- **Client can’t connect to sockets**
-    - Ensure `VITE_SERVER_URL` matches the server base URL.
-    - Check CORS and Socket.IO path if you changed defaults.
-- **Doc not saving**
-    - Verify `MONGO_URI` and network access to MongoDB.
-    - Watch server logs for validation errors.
-- **Port conflicts**
-    - Change `PORT` in `server/.env` or `vite.config.ts` dev server port.
+### A) Backend (Web Service)
+1. Create a **Web Service** from the `/server` directory of your GitHub repo.
+2. Environment:
+   - Add `MONGO_URI`
+   - Add `CLIENT_URLS` exactly as:
+     ```
+     http://localhost:5173,https://google-docs-clone-a44r.onrender.com
+     ```
+3. Build command:
+   ```
+   yarn
+   ```
+4. Start command (match your server script):
+   ```
+   yarn start
+   ```
+   or
+   ```
+   node server.js
+   ```
+5. Note the backend URL (e.g. `https://your-server.onrender.com`).
+
+### B) Frontend (Static Site)
+1. Create a **Static Site** from the `/client` directory of your GitHub repo.
+2. Environment (Static Site):
+   - Add `VITE_SERVER_URL` and set it to your backend URL from step A (e.g. `https://your-server.onrender.com`).
+3. Build command:
+   ```
+   yarn build
+   ```
+4. Publish directory:
+   ```
+   dist
+   ```
+5. **Redirects/Rewrites (SPA fix)**
+   Add a rewrite so deep links like `/documents/<id>` work on refresh:
+   - Source: `/*`
+   - Destination: `/index.html`
+   - Action: `Rewrite`
+
+This prevents 404s when opening a document URL directly in a new tab.
+
+---
+# Google Docs Clone
+
+Real-time collaborative text editor built with React + Quill, Socket.IO, and Node.js. Create, share, and edit documents with live cursor updates and periodic autosave.
+
+## Live Demo
+https://google-docs-clone-a44r.onrender.com
+
+## Screenshots & Live Demo
+- Live app: https://google-docs-clone-a44r.onrender.com
+- (Add screenshots here, e.g. `/screenshots/home.png`, `/screenshots/editor.png`)
+
+## Tech Stack
+- Frontend: React (Vite), Quill 2
+- Realtime: Socket.IO
+- Backend: Node.js, Express
+- Database: MongoDB Atlas (M0 Free tier works)
+- Build/Deploy: Render (Static Site for client, Web Service for server)
+
+## Features
+- Create & open documents via URL (UUID)
+- Collaborative editing with Quill
+- Realtime updates over WebSockets (Socket.IO)
+- Autosave every few seconds
+- Rich text formatting (headings, lists, bold/italic/underline, code blocks, images, alignment, colors)
+
+## Monorepo Structure
+```
+/client     # React + Vite app
+/server     # Node.js + Express + Socket.IO API
+```
+
+## Prerequisites
+- Node.js 18+
+- Yarn
+- MongoDB Atlas cluster (or local MongoDB)
+- Render accounts for frontend and backend (optional but recommended)
+
+---
+
+## Environment Variables
+
+### Server (`/server/.env`)
+```
+PORT=3001
+MONGO_URI=<your MongoDB connection string>
+# Comma-separated list of allowed client origins (no spaces)
+CLIENT_URLS=http://localhost:5173,https://google-docs-clone-a44r.onrender.com
+```
+
+> Important: `CLIENT_URLS` **must** include both your local URL and your deployed frontend URL as shown above.
+
+### Client (`/client/.env`)
+```
+# Point this to your local or deployed server base URL
+VITE_SERVER_URL=http://localhost:3001
+# For production build on Render (example):
+# VITE_SERVER_URL=https://<your-backend-on-render>.onrender.com
+```
+
+---
+
+## Local Development
+
+### 1) Install dependencies
+```bash
+# in /client
+yarn
+
+# in /server
+yarn
+```
+
+### 2) Start backend
+```bash
+# in /server
+yarn dev    # or: yarn start / node server.js (match your server script)
+```
+
+### 3) Start frontend
+```bash
+# in /client
+yarn dev    # runs Vite on http://localhost:5173
+```
+
+Open `http://localhost:5173` and create/open a document route like:
+```
+/documents/26edcc24-3634-474c-948a-7f284cd1be20
+```
+
+---
+
+## Scripts (reference)
+
+### Client (`/client/package.json`)
+- `yarn dev` – start Vite dev server
+- `yarn build` – build for production
+- `yarn preview` – preview production build
+
+### Server (`/server/package.json`)
+- `yarn dev` – run server in dev mode (e.g. nodemon)
+- `yarn start` – run production server
 
 ---
 
