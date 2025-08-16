@@ -1,8 +1,17 @@
-const { Schema, model } = require("mongoose")
+const { Schema, model } = require("mongoose");
 
-const Document = new Schema({
+const DocumentSchema = new Schema({
     _id: String,
     data: Object,
-})
+});
 
-module.exports = model("Document", Document)
+const Document = model("Document", DocumentSchema);
+
+async function findOrCreateDocument(id) {
+    if (!id) return null;
+    const existingDocument = await Document.findById(id);
+    if (existingDocument) return existingDocument;
+    return Document.create({ _id: id, data: "" });
+}
+
+module.exports = { Document, findOrCreateDocument }

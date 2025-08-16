@@ -1,6 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const Document = require("./Document");
+const { Document, findOrCreateDocument } = require("./Document");
+
 const http = require("http");
 const { Server } = require("socket.io");
 const express = require("express");
@@ -51,10 +52,3 @@ io.on("connection", (socket) => {
         });
     });
 });
-
-async function findOrCreateDocument(id) {
-    if (!id) return null;
-    const existingDocument = await Document.findById(id);
-    if (existingDocument) return existingDocument;
-    return Document.create({ _id: id, data: "" });
-}
