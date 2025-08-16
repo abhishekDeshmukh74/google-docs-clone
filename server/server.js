@@ -3,9 +3,11 @@ const mongoose = require("mongoose");
 const Document = require("./Document");
 const http = require("http");
 const { Server } = require("socket.io");
+const express = require("express");
 
 const PORT = process.env.PORT || 3001;
-const server = http.createServer();
+const app = express();
+const server = http.createServer(app);
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -18,6 +20,10 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .catch((err) => {
     console.error("MongoDB connection error:", err);
+});
+
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "ok" });
 });
 
 server.listen(PORT, () => console.log(`Server listening on ${PORT}`));
