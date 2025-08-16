@@ -29,9 +29,11 @@ app.get("/health", (req, res) => {
 
 server.listen(PORT, () => console.log(`Server listening on ${PORT}`));
 
+const allowedOrigins = (process.env.CLIENT_URLS || '').split(',').map(url => url.trim()).filter(Boolean);
+
 const io = new Server(server, {
     cors: {
-        origin: process.env.CLIENT_URL || '*',
+        origin: allowedOrigins.length > 0 ? allowedOrigins : '*',
         methods: ["GET", "POST"],
     },
 });
