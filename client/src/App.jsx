@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path='/' exact element={<Navigate to={`/documents/${uuidV4()}`} replace />} />
         <Route path='/documents/:documentId' element={<TextEditor />} />
+        <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </BrowserRouter>
   );
