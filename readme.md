@@ -2,7 +2,7 @@
 
 A lightweight collaborative rich-text editor built with **React (Vite)**, **Quill**, **Socket.IO**, **Node/Express**, and **MongoDB**. It supports real-time editing with autosave and document persistence.
 
-> Repo layout includes `client/` and `server/` packages, and the repo is tagged with topics like mongodb, reactjs, socket-io, quill, and vite.
+> Repo layout includes `client/` and `server/` packages.
 
 ---
 
@@ -70,13 +70,11 @@ Create **`server/.env`**:
 ```env
 PORT=3001
 MONGO_URI=your-mongodb-connection-string
-# Optional: CORS/frontend URL if you lock it down
 CLIENT_ORIGIN=http://localhost:5173
 ```
 
 Create **`client/.env`**:
 ```env
-# Vite requires the VITE_ prefix
 VITE_SERVER_URL=http://localhost:3001
 ```
 
@@ -85,8 +83,7 @@ VITE_SERVER_URL=http://localhost:3001
 ### 5) Run the server
 ```bash
 cd server
-yarn dev            # or: yarn start
-```
+yarn dev
 
 ### 6) Run the client
 ```bash
@@ -103,7 +100,7 @@ yarn dev
 
 1. Start both **server** and **client**.
 2. Open the app and navigate to a document URL. Common patterns:
-     - Auto-generated doc ID on load (e.g., `/documents/:id`)
+     - Auto-generated doc ID on load (e.g., `/documents/:documentId`)
      - Or paste a known doc ID into the URL to join the same room
 3. Open the same document in another browser/tab to see live updates.
 
