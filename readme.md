@@ -6,13 +6,15 @@ A **lightweight, real-time collaborative rich-text editor** built with **React (
 
 ## 🚀 Live Demo
 
-[Access the Live Demo](https://google-docs-clone-a44r.onrender.com)
+Live app: [Access the Live Demo](https://google-docs-clone-a44r.onrender.com)
 
 ---
 
-## 📸 Screenshots & Live Demo
-- Live app: https://google-docs-clone-a44r.onrender.com
+## 🎥 Demo Video Recording
+
 - [🎥 Demo Video Recording](https://github.com/abhishekDeshmukh74/google-docs-clone/blob/master/client/public/demo%20recording.mp4)
+
+---
 
 ## 🧱 Tech Stack
 - Frontend: React (Vite), Quill 2
@@ -21,6 +23,8 @@ A **lightweight, real-time collaborative rich-text editor** built with **React (
 - Database: MongoDB Atlas (M0 Free tier works)
 - Build/Deploy: Render (Static Site for client, Web Service for server)
 
+---
+
 ## ✨ Features
 - Create & open documents via URL (UUID)
 - Collaborative editing with Quill
@@ -28,11 +32,15 @@ A **lightweight, real-time collaborative rich-text editor** built with **React (
 - Autosave every few seconds
 - Rich text formatting (headings, lists, bold/italic/underline, code blocks, images, alignment, colors)
 
+---
+
 ## 🧱 Monorepo Structure
 ```
 /client     # React + Vite app
 /server     # Node.js + Express + Socket.IO API
 ```
+
+---
 
 ## Prerequisites
 - Node.js 18+
