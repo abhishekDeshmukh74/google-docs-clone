@@ -1,0 +1,30 @@
+services:
+  # --- SERVER (Socket.IO + Express) ---
+  - type: web
+    name: gdocs-server
+    env: node                # Changed from "runtime" to "env"
+    plan: free
+    rootDir: server
+    buildCommand: yarn install
+    startCommand: node index.js
+    # Optional, if you add a health endpoint
+    # healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI        # set in dashboard on first apply
+        sync: false
+      - key: CLIENT_ORIGIN    # set after client goes live (its public URL)
+        sync: false
+
+  # --- CLIENT (Vite static site) ---
+  - type: web
+    name: gdocs-client
+    runtime: static
+    plan: free
+    rootDir: client
+    buildCommand: yarn install && yarn build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_SERVER_URL # set to your server's public URL after first deploy
+        sync: false

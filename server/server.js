@@ -1,7 +1,11 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const Document = require("./Document");
+const http = require("http");
 const { Server } = require("socket.io");
+
+const PORT = process.env.PORT || 3001;
+const server = http.createServer();
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -16,9 +20,11 @@ mongoose.connect(process.env.MONGO_URI, {
     console.error("MongoDB connection error:", err);
 });
 
-const io = new Server(process.env.PORT, {
+server.listen(PORT, () => console.log(`Server listening on ${PORT}`));
+
+const io = new Server(server, {
     cors: {
-        origin: process.env.CLIENT_URL,
+        origin: process.env.CLIENT_URL || '*',
         methods: ["GET", "POST"],
     },
 });
