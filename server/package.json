@@ -1,5 +1,6 @@
 {
   "name": "server",
+  "private": false,
   "version": "1.0.0",
   "description": "Backend for Google Docs clone using Socket.IO and MongoDB",
   "main": "server.js",

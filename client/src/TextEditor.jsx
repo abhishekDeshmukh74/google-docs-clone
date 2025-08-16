@@ -19,7 +19,7 @@ const TOOLBAR_OPTIONS = [
 
 function TextEditor() {
   const [quill, setQuill] = useState();
-   const [socket, setSocket] = useState();
+  const [socket, setSocket] = useState();
 
   useEffect(() => {
     const s = io(import.meta.env.VITE_SERVER_URL);
@@ -29,6 +29,33 @@ function TextEditor() {
       s.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (socket == null || quill == null) return;
+
+    const handler = (delta) => {
+      quill.updateContents(delta);
+    };
+    socket.on('receive-changes', handler);
+
+    return () => {
+      socket.off('receive-changes', handler);
+    };
+  }, [socket, quill]);
+
+  useEffect(() => {
+    if (socket == null || quill == null) return;
+
+    const handler = (delta, oldDelta, source) => {
+      if (source !== 'user') return;
+      socket.emit('send-changes', delta);
+    };
+    quill.on('text-change', handler);
+
+    return () => {
+      quill.off('text-change', handler);
+    };
+  }, [socket, quill]);
 
   const editorRef = useCallback((wrapper) => {
     if (wrapper == null) return;
@@ -40,12 +67,12 @@ function TextEditor() {
       theme: 'snow',
       modules: { toolbar: TOOLBAR_OPTIONS },
     });
-    q.disable();
-    q.setText('Loading...');
+    // q.disable();
+    // q.setText('Loading...');
     setQuill(q);
   }, []);
 
-  return <div id='' className='container' ref={editorRef}></div>;
+  return <div className='container' ref={editorRef}></div>;
 }
 
 export default TextEditor;

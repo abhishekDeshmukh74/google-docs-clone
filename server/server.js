@@ -6,6 +6,12 @@ const { Server } = require("socket.io");
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+})
+.then(() => {
+    console.log("Connected to MongoDB");
+})
+.catch((err) => {
+    console.error("MongoDB connection error:", err);
 });
 
 const io = new Server(process.env.PORT, {
@@ -16,6 +22,7 @@ const io = new Server(process.env.PORT, {
 });
 
 io.on("connection", (socket) => {
+
     socket.on("get-document", async (documentId) => {
         const document = await findOrCreateDocument(documentId);
         socket.join(documentId);

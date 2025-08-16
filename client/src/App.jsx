@@ -1,8 +1,17 @@
 import TextEditor from './TextEditor';
 import "./styles.css";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
+import { v4 as uuidV4 } from 'uuid';
 
 function App() {
-  return <TextEditor />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' exact element={<Navigate to={`/documents/${uuidV4()}`} replace />} />
+        <Route path='/documents/:id' element={<TextEditor />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
