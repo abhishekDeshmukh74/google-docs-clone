@@ -12,7 +12,9 @@ Live app: [Access the Live Demo](https://google-docs-clone-a44r.onrender.com)
 
 ## 🎥 Demo Video Recording
 
-- [🎥 Demo Video Recording](https://github.com/abhishekDeshmukh74/google-docs-clone/blob/master/client/public/demo%20recording.mp4)
+<video src="https://github.com/abhishekDeshmukh74/google-docs-clone/blob/master/client/public/demo%20recording.mp4?raw=true" controls width="600">
+   Your browser does not support the video tag.
+</video>
 
 ---
 
