@@ -21,7 +21,6 @@ services:
   - type: web
     name: gdocs-client
     runtime: static
-    plan: free
     rootDir: client
     buildCommand: yarn install && yarn build
     staticPublishPath: dist
