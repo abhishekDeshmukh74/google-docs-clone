@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import Quill from 'quill';
+import { io } from 'socket.io-client';
 
 import 'quill/dist/quill.snow.css';
 
@@ -17,8 +18,17 @@ const TOOLBAR_OPTIONS = [
 ];
 
 function TextEditor() {
-
   const [quill, setQuill] = useState();
+   const [socket, setSocket] = useState();
+
+  useEffect(() => {
+    const s = io(import.meta.env.VITE_SERVER_URL);
+    setSocket(s);
+
+    return () => {
+      s.disconnect();
+    };
+  }, []);
 
   const editorRef = useCallback((wrapper) => {
     if (wrapper == null) return;
